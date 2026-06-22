@@ -2,15 +2,17 @@ const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
 
 const TIER1 = [
   'Built from scratch around your brand — never a recycled template',
-  'Loads instantly, always on',
+  'Hosting included, always on',
+  'Fresh every week — we handle the updates',
   'Designed to turn visitors into booked leads',
   'One-time setup — custom',
 ]
 const TIER2 = [
   'Everything in the Website tier',
-  'Automated follow-up, so no inquiry goes cold',
-  "An inbound AI receptionist that answers every call, books, and qualifies — 24/7, in your brand's voice",
-  'Never miss a call again',
+  "An inbound AI receptionist that answers, books, and qualifies every call — 24/7, in your brand's voice",
+  'A CRM that captures every lead and follows up so none go cold',
+  'A company AI brain that learns your business and answers like you would',
+  'Custom automations built around how your company actually runs',
   'One-time setup — custom',
 ]
 
@@ -74,10 +76,11 @@ export default function Development() {
           <h2 className="h2" data-reveal style={{ maxWidth: '20ch' }}>
             The call you'd have missed becomes the <span className="grad-text">booking you didn't.</span>
           </h2>
-          <p className="lead" data-reveal style={{ marginTop: 18, maxWidth: '60ch' }}>
-            The receptionist answers the phone — it never cold-calls, never chases. It picks up every inbound call,
-            day or night, books the appointment, and qualifies the lead, all in your brand's voice. Lead Gen finds
-            the customer; this makes sure not one of them hits a voicemail.
+          <p className="lead" data-reveal style={{ marginTop: 18, maxWidth: '62ch' }}>
+            Behind it is a company AI brain that learns how your business actually works — then runs your front desk:
+            every inbound call answered, booked, and qualified, day or night, in your voice. It never cold-calls and
+            never chases; it plays defense. Lead Gen finds the customer — the brain makes sure not one of them hits a
+            voicemail.
           </p>
           <p className="talks-note" data-reveal>
             The app is in active development — Tier 2 is early-access pricing while we build it out with founding clients.
