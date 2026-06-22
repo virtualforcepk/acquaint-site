@@ -9,8 +9,7 @@ const CLIENTS = ['Lease At Ease', 'Lamar Donair', 'Ricco Decor', 'Empire Protect
 
 // Headline split into words so they can cascade in. `1` = carries the gradient.
 const H1_WORDS = [
-  ['We'], ['build'], ['the'], ['systems'], ['that'], ['find', 1], ['your'], ['customers'], ['—'],
-  ['and'], ['the'], ['sites'], ['that'], ['close', 1], ['them.'],
+  ['Always'], ['pointed'], ['at'], ['your'], ['next'], ['customer.', 1],
 ]
 
 export default function Landing() {
@@ -84,7 +83,7 @@ export default function Landing() {
               ))}
             </h1>
             <p className="lead hero-sub" style={{ marginTop: 24 }}>
-              Production lead-gen systems and conversion-built websites — engineered, shipped, and running.
+              Lead-gen systems that find them, and conversion-built sites that close them — engineered, shipped, and running.
               Not campaigns. Systems.
             </p>
             <div className="cta-row hero-cta" style={{ marginTop: 34 }}>

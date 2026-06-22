@@ -4,6 +4,7 @@ import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Landing from './pages/Landing.jsx'
+import ComingSoon from './pages/ComingSoon.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 const BASE = import.meta.env.BASE_URL
@@ -127,9 +128,9 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/lead-gen" element={<Stub title="Lead-Gen Systems" />} />
-          <Route path="/web-automation" element={<Stub title="Websites + Automation" />} />
-          <Route path="/about" element={<Stub title="About Acquaint" />} />
+          <Route path="/lead-gen" element={<ComingSoon title="Lead Gen" />} />
+          <Route path="/web-automation" element={<ComingSoon title="Websites + Automation" />} />
+          <Route path="/about" element={<ComingSoon title="About" />} />
         </Routes>
       </main>
       <Footer />
