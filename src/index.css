@@ -1,0 +1,123 @@
+/* =====================================================================
+   Acquaint Media — design system
+   Dark base + green→blue ombré (the logo's own palette).
+   FounderOS-simple: oversized type, whitespace, one accent, restraint.
+   ===================================================================== */
+:root {
+  /* ---- palette ---- */
+  --bg:        #05080f;   /* deep near-black, faint blue */
+  --bg-2:      #0a0f1a;
+  --bg-3:      #111a2b;
+  --ink:       #eef3ff;   /* near-white */
+  --ink-dim:   #c3cde0;
+  --muted:     #8a97ad;
+  --line:      rgba(180, 205, 245, 0.10);
+  --line-2:    rgba(180, 205, 245, 0.18);
+
+  /* green → blue ombré */
+  --green:     #1fe0a4;
+  --cyan:      #34d6f0;
+  --blue:      #5b8def;
+  --blue-deep: #2f5fe0;
+  --grad:      linear-gradient(110deg, var(--green) 0%, var(--cyan) 50%, var(--blue) 100%);
+  --grad-rev:  linear-gradient(110deg, var(--blue) 0%, var(--cyan) 50%, var(--green) 100%);
+  --grad-soft: linear-gradient(160deg, rgba(31,224,164,0.14), rgba(91,141,239,0.14));
+
+  /* ---- type ---- */
+  --display: "Clash Display", system-ui, sans-serif;
+  --body:    "Satoshi", system-ui, sans-serif;
+  --mono:    "Space Mono", ui-monospace, monospace;
+
+  /* ---- layout ---- */
+  --pad-x:  clamp(20px, 5.5vw, 96px);
+  --maxw:   1180px;
+  --radius: 16px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background:
+    radial-gradient(72% 56% at 14% 8%, rgba(31, 224, 164, 0.18), transparent 58%),
+    radial-gradient(76% 64% at 88% 88%, rgba(91, 141, 239, 0.22), transparent 60%),
+    linear-gradient(158deg, #06130f 0%, #05080f 48%, #070d1e 100%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img, svg, video, canvas { display: block; max-width: 100%; }
+button { font: inherit; }
+::selection { background: rgba(52, 214, 240, 0.28); color: #fff; }
+
+/* =====================  layout primitives  ===================== */
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad-x); }
+.section   { position: relative; padding: clamp(72px, 11vh, 150px) 0; }
+.center    { text-align: center; }
+.center .lead { margin-left: auto; margin-right: auto; }
+
+/* =====================  type  ===================== */
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 12.5px; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan);
+  display: inline-block; margin-bottom: 20px;
+}
+.h1 {
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(42px, 7vw, 94px); line-height: 0.97; letter-spacing: -0.025em;
+}
+.h2 {
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(30px, 4.8vw, 62px); line-height: 1.0; letter-spacing: -0.022em;
+}
+.h3 {
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(20px, 2.2vw, 27px); line-height: 1.1; letter-spacing: -0.015em;
+}
+.lead { font-size: clamp(17px, 1.7vw, 21px); color: var(--muted); line-height: 1.55; max-width: 58ch; }
+.kicker-num { font-family: var(--mono); color: var(--cyan); font-size: 13px; }
+
+/* =====================  buttons  ===================== */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--body); font-weight: 700; font-size: 16px;
+  padding: 15px 28px; border-radius: 999px; cursor: pointer; border: 0;
+  background: var(--grad); color: #03131c; white-space: nowrap;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(52, 214, 240, 0.26); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 15px; color: var(--ink);
+  padding: 14px 24px; border-radius: 999px; border: 1px solid var(--line-2); cursor: pointer; background: transparent;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.btn-ghost:hover { border-color: rgba(52, 214, 240, 0.55); background: rgba(52, 214, 240, 0.06); transform: translateY(-2px); }
+.cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* =====================  surfaces  ===================== */
+.card {
+  position: relative; border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(17, 26, 43, 0.55), rgba(10, 15, 26, 0.55));
+  padding: 30px; transition: border-color .25s ease, transform .25s ease;
+}
+.card:hover { border-color: var(--line-2); transform: translateY(-4px); }
+.hairline { height: 1px; background: var(--line); border: 0; }
+
+/* =====================  reveal animation hook (GSAP toggles)  ===================== */
+[data-reveal] { opacity: 0; transform: translateY(26px); }
+
+/* =====================  responsive  ===================== */
+@media (max-width: 760px) {
+  .cta-row { gap: 12px; }
+  .section { padding: 64px 0; }
+}
