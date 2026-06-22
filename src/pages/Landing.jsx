@@ -86,7 +86,7 @@ export default function Landing() {
         <section className="hero">
           <div className="container hero-stack">
             <div className="hero-copy">
-              <div className="eyebrow">AI Lead-Gen · Websites · Automation</div>
+              <div className="eyebrow">Lead-Gen · Websites · The voice that answers</div>
               <h1 className="h1">
                 {H1_WORDS.map(([w, grad], i) => (
                   <span key={i} className={'hw' + (grad ? ' grad-text' : '')}>{w}</span>
@@ -126,22 +126,23 @@ export default function Landing() {
             </h2>
             <div className="offer-grid">
               <Link to="/lead-gen" className="card offer-card" data-reveal>
-                <div className="kicker-num">01</div>
-                <h3 className="h3">Lead-Gen Systems</h3>
+                <div className="kicker-num">01 · Your offense</div>
+                <h3 className="h3">Lead Gen</h3>
                 <p>
-                  We dig your next customer out of the noise and turn them into a sale — targeting, multi-channel outreach,
-                  AI lead-scoring, and CRM automation, engineered as one system.
+                  We find your next customer and turn them into a sale — targeting, multi-channel outreach,
+                  AI lead-scoring, and follow-up, run as one system.
                 </p>
                 <span className="offer-link">Explore lead gen →</span>
               </Link>
               <Link to="/web-automation" className="card offer-card" data-reveal>
-                <div className="kicker-num">02</div>
-                <h3 className="h3">Websites + Automation</h3>
+                <div className="kicker-num">02 · Your defense</div>
+                <h3 className="h3">Development</h3>
                 <p>
-                  The front-end that closes them — plus the AI front desk that answers, follows up, and books appointments
-                  24/7. Exhibit A: this site.
+                  Websites that close — and the system that runs your front desk. A fast custom site from{' '}
+                  <strong>$97/mo</strong>, or the full app with an inbound AI receptionist that never misses a call,{' '}
+                  <strong>$997/mo</strong>.
                 </p>
-                <span className="offer-link">Explore web + automation →</span>
+                <span className="offer-link">Explore development →</span>
               </Link>
             </div>
           </div>
@@ -211,6 +212,7 @@ export default function Landing() {
         .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
         .offer-card { display: flex; flex-direction: column; gap: 14px; min-height: 256px; }
         .offer-card p { color: var(--muted); line-height: 1.55; }
+        .offer-card p strong { color: var(--ink); font-weight: 600; }
         .offer-link { margin-top: auto; color: var(--cyan); font-weight: 600; }
         .metrics { display: flex; gap: 64px; flex-wrap: wrap; margin: 40px 0; }
         .metric-n { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 4vw, 52px); line-height: 1; }
