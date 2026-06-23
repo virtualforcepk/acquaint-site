@@ -13,6 +13,14 @@ const METRICS = [
   { n: '30,000+', l: 'leads AI-scored & ranked' },
   { n: '1,700+', l: 'leads actively worked' },
 ]
+const EXPERIENCE = [
+  'Paid ad campaigns',
+  'Lead-gen systems',
+  'Cold outreach',
+  'Landing funnels',
+  'CRM & follow-up',
+  'Multi-agent outreach',
+]
 export default function LeadGen() {
   return (
     <>
@@ -29,6 +37,24 @@ export default function LeadGen() {
           </p>
           <div className="cta-row" data-reveal style={{ justifyContent: 'center', marginTop: 30 }}>
             <a className="btn" href={CALENDLY} target="_blank" rel="noreferrer">Book a call</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== EXPERIENCE ===== */}
+      <section className="section">
+        <div className="container">
+          <div className="eyebrow" data-reveal>Experience</div>
+          <h2 className="h2" data-reveal style={{ maxWidth: '18ch' }}>
+            If it attracts customers, <span className="grad-text">we've run it.</span>
+          </h2>
+          <p className="lead" data-reveal style={{ marginTop: 18, maxWidth: '62ch' }}>
+            Years of getting small businesses in front of the people ready to buy. Paid ad campaigns, full lead-gen
+            systems, cold outreach, funnels that follow up, across local services, trades, retail & consulting. The
+            unglamorous work that actually fills a pipeline, we've done a lot of it.
+          </p>
+          <div className="exp-chips" data-reveal>
+            {EXPERIENCE.map((e) => <span className="exp-chip" key={e}>{e}</span>)}
           </div>
         </div>
       </section>
@@ -83,11 +109,12 @@ export default function LeadGen() {
               <div className="case-result grad-text">Real-estate lead-gen</div>
               <p>A property business running our full system. We source, score, & work their pipeline every day. They're behind the numbers above.</p>
             </div>
-            {/* AKFB = Amazon Key for Business (Kamran's project). Amazon brand kept low-key per their wishes; mention cleared with them — confirm exact wording before shipping. */}
+            {/* De-identified corporate case study (originally the Amazon / AKFB multi-agent build). Per the
+                client's brand wishes we don't name them on the page; framed as a corporate-level build. */}
             <div className="card case-card" data-reveal>
-              <div className="case-name">Multi-agent harness</div>
-              <div className="case-result grad-text">Built + approved</div>
-              <p>A multi-step system of AI agents we built & run. It earned Amazon's approval.</p>
+              <div className="case-name">Multi-agent outreach system</div>
+              <div className="case-result grad-text">Corporate-grade</div>
+              <p>A multi-step system of AI agents we designed, built & run, the outreach engine we created for corporate-level businesses.</p>
             </div>
             <div className="card case-card" data-reveal>
               <div className="case-name">Jawanda Consulting</div>
@@ -129,6 +156,8 @@ export default function LeadGen() {
         .case-name { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
         .case-result { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.05; }
         .case-card p { color: var(--ink-dim); line-height: 1.5; font-size: 15px; }
+        .exp-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+        .exp-chip { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; }
         @media (max-width: 760px) {
           .lg-steps { grid-template-columns: 1fr; }
           .case-grid { grid-template-columns: 1fr; }
