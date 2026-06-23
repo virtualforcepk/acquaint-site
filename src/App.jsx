@@ -4,17 +4,26 @@ import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Landing from './pages/Landing.jsx'
-import ComingSoon from './pages/ComingSoon.jsx'
+import About from './pages/About.jsx'
 import Development from './pages/Development.jsx'
 import LeadGen from './pages/LeadGen.jsx'
+import { initAnalytics, trackPageView } from './analytics.js'
 
 gsap.registerPlugin(ScrollTrigger)
 const BASE = import.meta.env.BASE_URL
 const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
 
+const PAGE_TITLES = {
+  '/': 'Acquaint Media | AI Lead-Gen & Websites That Convert',
+  '/lead-gen': 'Lead Gen | Acquaint Media',
+  '/web-automation': 'Development | Acquaint Media',
+  '/about': 'About | Acquaint Media',
+}
+
 function ScrollFX() {
   const { pathname } = useLocation()
   useEffect(() => {
+    initAnalytics()
     const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
     lenis.on('scroll', ScrollTrigger.update)
     const raf = (t) => lenis.raf(t * 1000)
@@ -24,6 +33,8 @@ function ScrollFX() {
   }, [])
   useEffect(() => {
     window.scrollTo(0, 0)
+    document.title = PAGE_TITLES[pathname] || 'Acquaint Media'
+    trackPageView(pathname)
     const ctx = gsap.context(() => {
       gsap.utils.toArray('[data-reveal]').forEach((el) =>
         gsap.to(el, {
@@ -132,7 +143,7 @@ export default function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/lead-gen" element={<LeadGen />} />
           <Route path="/web-automation" element={<Development />} />
-          <Route path="/about" element={<ComingSoon title="About" />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </main>
       <Footer />

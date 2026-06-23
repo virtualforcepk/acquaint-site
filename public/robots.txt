@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://virtualforcepk.github.io/acquaint-site/sitemap.xml
