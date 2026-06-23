@@ -27,19 +27,22 @@ export default function Landing() {
   const rootRef = useRef(null)
 
   // Arrow field — each arrow starts off-screen SW and sweeps NE to its base spot
-  // (full-screen cover), then lingers as the faint ambient background.
-  const barrage = useMemo(
-    () => Array.from({ length: 38 }, () => ({
-      left: -4 + Math.random() * 108,      // vw — base spot, spread across the full screen
-      top: -4 + Math.random() * 108,       // vh
-      size: 12 + Math.random() * 26,       // px
-      fromMul: 0.4 + Math.random() * 0.5,  // how far off-screen SW it starts (× viewport)
-      op: 0.10 + Math.random() * 0.24,     // faint
-    })),
-    [],
-  )
+  // (full-screen cover), then lingers as the faint ambient background. Fewer &
+  // smaller on phones so the rain doesn't crowd a narrow screen.
+  const barrage = useMemo(() => {
+    const mobile = window.innerWidth && window.innerWidth < 760
+    const count = mobile ? 24 : 38
+    const maxSize = mobile ? 17 : 26
+    return Array.from({ length: count }, () => ({
+      left: -4 + Math.random() * 108,         // vw — base spot, spread across the full screen
+      top: -4 + Math.random() * 108,          // vh
+      size: 12 + Math.random() * maxSize,     // px
+      fromMul: 0.4 + Math.random() * 0.5,     // how far off-screen SW it starts (× viewport)
+      op: 0.10 + Math.random() * 0.24,        // faint
+    }))
+  }, [])
 
-  // Scroll transition: the instant you scroll, the centered commander fades out and a
+  // Scroll transition: the instant you scroll, the centered bullseye fades out and a
   // wave of arrows sweeps in from off-screen bottom-left (SW), flying NE to fill the
   // whole screen — all inside the first ~1/3 page. The copy sits a bit further down so
   // it only reveals (via [data-reveal]) once the figure's gone and the arrows cover.
@@ -205,7 +208,7 @@ export default function Landing() {
         .barrage-arrow { position: absolute; opacity: 0; will-change: transform, opacity; filter: drop-shadow(0 2px 7px rgba(0,0,0,.35)); }
         .page { position: relative; z-index: 1; }
 
-        .hero-stage { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .hero-stage { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center; }
         .hero-figure { will-change: transform, opacity; }
         .stick { width: clamp(110px, 15vw, 180px); height: auto; display: block; }
 
