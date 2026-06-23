@@ -9,7 +9,7 @@ const PRINCIPLES = [
 const BUILDING = [
   { t: 'The AI front desk', d: 'An always-on agent that answers, qualifies, and books appointments 24/7 — so no lead goes cold while you sleep.' },
   { t: 'Lead-gen, more channels', d: 'Expanding the sourcing and outreach engine across more of the places your next customer actually is.' },
-  { t: 'A growing case-study library', d: 'Every site and automation we ship becomes the next proof point. The Websites + Automation page grows as we do.' },
+  { t: 'A growing case-study library', d: 'Every site and automation we ship becomes the next proof point. The Development page grows as we do.' },
 ]
 
 export default function About() {

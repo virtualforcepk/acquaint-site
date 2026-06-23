@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Landing from './pages/Landing.jsx'
 import ComingSoon from './pages/ComingSoon.jsx'
 import Development from './pages/Development.jsx'
+import LeadGen from './pages/LeadGen.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 const BASE = import.meta.env.BASE_URL
@@ -46,7 +47,7 @@ function Nav() {
       </Link>
       <div className="nav-links">
         <NavLink to="/lead-gen">Lead Gen</NavLink>
-        <NavLink to="/web-automation">Websites</NavLink>
+        <NavLink to="/web-automation">Development</NavLink>
         <NavLink to="/about">About</NavLink>
         <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn nav-cta">Book a call</a>
       </div>
@@ -80,7 +81,7 @@ function Footer() {
           <div>
             <div className="footer-h">Offers</div>
             <Link to="/lead-gen">Lead Gen</Link>
-            <Link to="/web-automation">Websites + Automation</Link>
+            <Link to="/web-automation">Development</Link>
           </div>
           <div>
             <div className="footer-h">Company</div>
@@ -129,7 +130,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/lead-gen" element={<ComingSoon title="Lead Gen" />} />
+          <Route path="/lead-gen" element={<LeadGen />} />
           <Route path="/web-automation" element={<Development />} />
           <Route path="/about" element={<ComingSoon title="About" />} />
         </Routes>
