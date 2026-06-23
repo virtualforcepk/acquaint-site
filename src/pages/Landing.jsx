@@ -9,63 +9,75 @@ gsap.registerPlugin(ScrollTrigger)
 const BASE = import.meta.env.BASE_URL
 const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
 
-// Headline split into words so they cascade in. `1` = carries the gradient.
-const H1_WORDS = [
-  ['Always'], ['pointed'], ['at'], ['your'], ['next'], ['customer.', 1],
-]
+// White bullseye target with an X at the center — the hero "mark" that dissolves
+// into the arrow wave on scroll.
+function Bullseye() {
+  return (
+    <svg className="stick" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <circle cx="60" cy="60" r="52" stroke="#fff" strokeWidth="5" />
+      <circle cx="60" cy="60" r="34" stroke="#fff" strokeWidth="5" />
+      <circle cx="60" cy="60" r="17" stroke="#fff" strokeWidth="5" />
+      <line x1="49" y1="49" x2="71" y2="71" stroke="#fff" strokeWidth="5" strokeLinecap="round" />
+      <line x1="71" y1="49" x2="49" y2="71" stroke="#fff" strokeWidth="5" strokeLinecap="round" />
+    </svg>
+  )
+}
 
 export default function Landing() {
   const rootRef = useRef(null)
 
-  // Ambient arrow field — some are in view from the start, the rest stream up
-  // from below as you scroll. All fly NE (toward the Book-a-call corner).
+  // Arrow field — each arrow starts off-screen SW and sweeps NE to its base spot
+  // (full-screen cover), then lingers as the faint ambient background.
   const barrage = useMemo(
-    () => Array.from({ length: 28 }, () => ({
-      left: -6 + Math.random() * 108,    // vw
-      top: 6 + Math.random() * 200,      // vh — spread across + far below the fold
-      size: 12 + Math.random() * 30,     // px
-      speed: 0.7 + Math.random() * 1.4,  // travel multiplier
-      op: 0.10 + Math.random() * 0.26,   // faint
+    () => Array.from({ length: 38 }, () => ({
+      left: -4 + Math.random() * 108,      // vw — base spot, spread across the full screen
+      top: -4 + Math.random() * 108,       // vh
+      size: 12 + Math.random() * 26,       // px
+      fromMul: 0.4 + Math.random() * 0.5,  // how far off-screen SW it starts (× viewport)
+      op: 0.10 + Math.random() * 0.24,     // faint
     })),
     [],
   )
 
-  // Hero intro: the headline + supporting copy cascade in (no arrow anymore).
-  useLayoutEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const ctx = gsap.context(() => {
-      const words = gsap.utils.toArray('.hw')
-      if (reduce) {
-        gsap.set(['.hero-copy .eyebrow', ...words, '.hero-sub', '.hero-cta'], { opacity: 1, x: 0, y: 0 })
-        return
-      }
-      gsap.set('.hero-copy .eyebrow', { opacity: 0, y: 14 })
-      gsap.set(words, { opacity: 0, y: 22 })
-      gsap.set(['.hero-sub', '.hero-cta'], { opacity: 0, y: 16 })
-
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.to('.hero-copy .eyebrow', { opacity: 1, y: 0, duration: 0.6 }, 0.1)
-      tl.to(words, { opacity: 1, y: 0, duration: 0.55, stagger: 0.05 }, 0.3)
-      tl.to('.hero-sub', { opacity: 1, y: 0, duration: 0.6 }, '>-0.15')
-      tl.to('.hero-cta', { opacity: 1, y: 0, duration: 0.6 }, '<+0.1')
-      window.__heroTL = tl
-    }, rootRef)
-    return () => ctx.revert()
-  }, [])
-
-  // Scroll barrage: each arrow streams NE, scrubbed to scroll progress.
+  // Scroll transition: the instant you scroll, the centered commander fades out and a
+  // wave of arrows sweeps in from off-screen bottom-left (SW), flying NE to fill the
+  // whole screen — all inside the first ~1/3 page. The copy sits a bit further down so
+  // it only reveals (via [data-reveal]) once the figure's gone and the arrows cover.
   useLayoutEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const ctx = gsap.context(() => {
       if (reduce) { gsap.set('.barrage-arrow', { opacity: 0 }); return }
-      const span = window.innerHeight * 2.4
-      gsap.utils.toArray('.barrage-arrow').forEach((el, i) => {
-        const c = barrage[i]
-        gsap.to(el, {
-          x: span * c.speed, y: -span * c.speed, ease: 'none',
-          scrollTrigger: { trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 0.6 },
-        })
+
+      const vw = window.innerWidth || 1280, vh = window.innerHeight || 800
+      const arrows = gsap.utils.toArray('.barrage-arrow')
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: document.documentElement,
+          start: 'top top',
+          end: '+=' + Math.round(vh * 0.32),   // snappy — figure gone + wave covering inside ~1/3 page
+          scrub: 0.3,
+        },
       })
+      // bullseye starts fading the instant you scroll but lingers, so the wave is
+      // visibly closing in on it by the time it's gone
+      tl.to('.hero-figure', { scale: 0.92, opacity: 0, ease: 'none', duration: 0.6 }, 0)
+      // wave: each arrow rushes in from off-screen SW to its base spot (full-screen
+      // cover), staggered along the SW→NE diagonal so it reads as one sweeping wave.
+      arrows.forEach((el, i) => {
+        const c = barrage[i]
+        const dx = (c.left + 4) / 108, dy = (c.top + 4) / 108
+        const phase = Math.min(1, Math.max(0, (dx + (1 - dy)) / 2))
+        const at = phase * 0.15
+        tl.fromTo(el,
+          { x: -vw * c.fromMul, y: vh * c.fromMul, scale: 0.7 },
+          { x: 0, y: 0, scale: 1, ease: 'none', duration: 0.6 },
+          at)
+        // fade in fast so each arrow shows the instant it starts moving (kept at 0 at rest)
+        tl.fromTo(el, { opacity: 0 }, { opacity: c.op, ease: 'none', duration: 0.12 }, at)
+      })
+      window.__heroScrollTL = tl
+
       ScrollTrigger.refresh()
     }, rootRef)
     return () => ctx.revert()
@@ -77,25 +89,28 @@ export default function Landing() {
       <div className="barrage" aria-hidden="true">
         {barrage.map((b, i) => (
           <img key={i} src={`${BASE}arrow-mark.png`} className="barrage-arrow" alt=""
-            style={{ left: `${b.left}vw`, top: `${b.top}vh`, width: `${b.size}px`, opacity: b.op }} />
+            style={{ left: `${b.left}vw`, top: `${b.top}vh`, width: `${b.size}px` }} />
         ))}
       </div>
 
       <div className="page">
-        {/* ===== HERO — text-forward, barrage carries the visual ===== */}
-        <section className="hero">
-          <div className="container hero-stack">
+        {/* ===== HERO FIGURE — centered bullseye target ===== */}
+        <section className="hero-stage">
+          <div className="hero-figure" aria-hidden="true"><Bullseye /></div>
+        </section>
+
+        {/* ===== HERO COPY — reveals as you scroll down ===== */}
+        <section className="hero-copy-wrap">
+          <div className="container">
             <div className="hero-copy">
-              <div className="eyebrow">Lead-Gen · Websites · The voice that answers</div>
-              <h1 className="h1">
-                {H1_WORDS.map(([w, grad], i) => (
-                  <span key={i} className={'hw' + (grad ? ' grad-text' : '')}>{w}</span>
-                ))}
+              <div className="eyebrow" data-reveal>Lead-Gen · Websites · The voice that answers</div>
+              <h1 className="h1" data-reveal>
+                Always pointed at your next <span className="grad-text">customer.</span>
               </h1>
-              <p className="lead hero-sub" style={{ margin: '22px auto 0' }}>
+              <p className="lead hero-sub" data-reveal style={{ margin: '22px auto 0' }}>
                 Lead-gen systems that find them & conversion-built sites that close them, engineered, shipped, & running. Not campaigns. Systems.
               </p>
-              <div className="cta-row hero-cta" style={{ marginTop: 32, justifyContent: 'center' }}>
+              <div className="cta-row hero-cta" data-reveal style={{ marginTop: 32, justifyContent: 'center' }}>
                 <a className="btn" href={CALENDLY} target="_blank" rel="noreferrer">Book a call</a>
                 <a className="btn-ghost" href={CALENDLY} target="_blank" rel="noreferrer">Get a free audit</a>
               </div>
@@ -187,14 +202,16 @@ export default function Landing() {
 
       <style>{`
         .barrage { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-        .barrage-arrow { position: absolute; will-change: transform; filter: drop-shadow(0 2px 7px rgba(0,0,0,.35)); }
+        .barrage-arrow { position: absolute; opacity: 0; will-change: transform, opacity; filter: drop-shadow(0 2px 7px rgba(0,0,0,.35)); }
         .page { position: relative; z-index: 1; }
 
-        .hero { min-height: 82vh; display: flex; align-items: center; padding: 132px 0 48px; }
-        .hero-stack { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .hero-copy { max-width: 820px; }
-        .hero-copy .h1 { font-size: clamp(46px, 8vw, 104px); }
-        .hw { display: inline-block; margin-right: 0.22em; will-change: transform, opacity; }
+        .hero-stage { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .hero-figure { will-change: transform, opacity; }
+        .stick { width: clamp(110px, 15vw, 180px); height: auto; display: block; }
+
+        .hero-copy-wrap { padding: 35vh 0 8px; text-align: center; }
+        .hero-copy { max-width: 820px; margin: 0 auto; }
+        .hero-copy .h1 { font-size: clamp(44px, 7.5vw, 96px); }
         .hero-copy .lead { margin-left: auto; margin-right: auto; }
 
         .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
