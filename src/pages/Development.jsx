@@ -1,19 +1,19 @@
 const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
 
 const TIER1 = [
-  'Built from scratch around your brand — never a recycled template',
+  'Built from scratch around your brand, never a recycled template',
   'Hosting included, always on',
-  'Fresh every week — we handle the updates',
+  'Fresh every week, we handle the updates',
   'Designed to turn visitors into booked leads',
-  'One-time setup — custom',
+  'One-time setup (custom)',
 ]
 const TIER2 = [
   'Everything in the Website tier',
-  "An inbound AI receptionist that answers, books, and qualifies every call — 24/7, in your brand's voice",
-  'A CRM that captures every lead and follows up so none go cold',
+  "An inbound AI receptionist that answers, books, & qualifies every call, 24/7, in your brand's voice",
+  'A CRM that captures every lead & follows up so none go cold',
   'A company AI brain that learns your business and answers like you would',
   'Custom automations built around how your company actually runs',
-  'One-time setup — custom',
+  'One-time setup (custom)',
 ]
 
 export default function Development() {
@@ -24,11 +24,11 @@ export default function Development() {
         <div className="container center">
           <div className="eyebrow" data-reveal>Development</div>
           <h1 className="h1" data-reveal style={{ maxWidth: '17ch', margin: '0 auto' }}>
-            A site that closes — and a front desk that <span className="grad-text">never sleeps.</span>
+            A site that closes & a front desk that <span className="grad-text">never sleeps.</span>
           </h1>
           <p className="lead center" data-reveal style={{ margin: '22px auto 0' }}>
-            Two ways in: a fast custom site that turns visitors into booked leads — or the full app that answers your
-            phone, books, and qualifies every inbound call on its own.
+            Two ways in: a fast custom site that turns visitors into booked leads, or the full app that answers your
+            phone, books, & qualifies every inbound call on its own.
           </p>
         </div>
       </section>
@@ -72,18 +72,18 @@ export default function Development() {
       {/* ===== INBOUND / DEFENSE ===== */}
       <section className="section talks-back">
         <div className="container">
-          <div className="eyebrow" data-reveal>Inbound only — your defense</div>
+          <div className="eyebrow" data-reveal>Inbound only · your defense</div>
           <h2 className="h2" data-reveal style={{ maxWidth: '20ch' }}>
             The call you'd have missed becomes the <span className="grad-text">booking you didn't.</span>
           </h2>
           <p className="lead" data-reveal style={{ marginTop: 18, maxWidth: '62ch' }}>
-            Behind it is a company AI brain that learns how your business actually works — then runs your front desk:
-            every inbound call answered, booked, and qualified, day or night, in your voice. It never cold-calls and
-            never chases; it plays defense. Lead Gen finds the customer — the brain makes sure not one of them hits a
+            Behind it is a company AI brain that learns how your business actually works, then runs your front desk:
+            every inbound call answered, booked, & qualified, day or night, in your voice. It never cold-calls &
+            never chases; it plays defense. Lead Gen finds the customer; the brain makes sure not one of them hits a
             voicemail.
           </p>
           <p className="talks-note" data-reveal>
-            The app is in active development — Tier 2 is early-access pricing while we build it out with founding clients.
+            The app is in active development. Tier 2 is early-access pricing while we build it out with founding clients.
           </p>
         </div>
       </section>
@@ -96,9 +96,9 @@ export default function Development() {
             We don't just build sites. We build <span className="grad-text">systems.</span>
           </h2>
           <p className="lead" data-reveal style={{ marginTop: 18, maxWidth: '62ch' }}>
-            The tiers above are the productized front door. Behind them, we build the harder things — multi-agent
-            systems, custom tools, and automations. Our own lead-gen engine — 88,000+ prospects sourced and scored —
-            is one we built and run ourselves, every day.
+            The tiers above are the productized front door. Behind them, we build the harder things: multi-agent
+            systems, custom tools, & automations. The lead-gen engine behind one of our clients sources & scores
+            88,000+ prospects every day. We built it, we run it.
           </p>
           <p className="depth-note" data-reveal>
             Need something bespoke? That's a conversation, not a tier.{' '}
@@ -114,7 +114,7 @@ export default function Development() {
             Let's build the site that <span className="grad-text">closes.</span>
           </h2>
           <p className="lead center" data-reveal style={{ margin: '20px auto 32px' }}>
-            Thirty minutes, no pitch. We'll show you what we'd build and which tier fits.
+            Thirty minutes, no pitch. We'll show you what we'd build & which tier fits.
           </p>
           <div className="cta-row" data-reveal style={{ justifyContent: 'center' }}>
             <a className="btn" href={CALENDLY} target="_blank" rel="noreferrer">Book a call</a>

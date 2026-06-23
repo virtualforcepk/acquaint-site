@@ -2,12 +2,12 @@ import { useLayoutEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import TrustMarquee from '../components/TrustMarquee.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const BASE = import.meta.env.BASE_URL
 const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
-const CLIENTS = ['Lease At Ease', 'Lamar Donair', 'Ricco Decor', 'Empire Protection', 'Jawanda Consulting']
 
 // Headline split into words so they cascade in. `1` = carries the gradient.
 const H1_WORDS = [
@@ -93,7 +93,7 @@ export default function Landing() {
                 ))}
               </h1>
               <p className="lead hero-sub" style={{ margin: '22px auto 0' }}>
-                Lead-gen systems that find them, and conversion-built sites that close them — engineered, shipped, and running. Not campaigns. Systems.
+                Lead-gen systems that find them & conversion-built sites that close them, engineered, shipped, & running. Not campaigns. Systems.
               </p>
               <div className="cta-row hero-cta" style={{ marginTop: 32, justifyContent: 'center' }}>
                 <a className="btn" href={CALENDLY} target="_blank" rel="noreferrer">Book a call</a>
@@ -104,16 +104,7 @@ export default function Landing() {
         </section>
 
         {/* ===== TRUST ===== */}
-        <section className="trust">
-          <div className="container center">
-            <div className="trust-label">Trusted by Canadian businesses</div>
-            <div className="trust-row">
-              {CLIENTS.map((c) => (
-                <span key={c}>{c}</span>
-              ))}
-            </div>
-          </div>
-        </section>
+        <TrustMarquee />
 
         {/* ===== TWO OFFERS ===== */}
         <section className="section">
@@ -122,15 +113,15 @@ export default function Landing() {
               What we build
             </div>
             <h2 className="h2" data-reveal style={{ textAlign: 'center', maxWidth: '16ch', margin: '0 auto 50px' }}>
-              Two systems. One outcome — <span className="grad-text">revenue.</span>
+              Two systems. One outcome: <span className="grad-text">revenue.</span>
             </h2>
             <div className="offer-grid">
               <Link to="/lead-gen" className="card offer-card" data-reveal>
                 <div className="kicker-num">01 · Your offense</div>
                 <h3 className="h3">Lead Gen</h3>
                 <p>
-                  We find your next customer and turn them into a sale — targeting, multi-channel outreach,
-                  AI lead-scoring, and follow-up, run as one system.
+                  We find your next customer & turn them into a sale: targeting, multi-channel outreach,
+                  AI lead-scoring, & follow-up, run as one system.
                 </p>
                 <span className="offer-link">Explore lead gen →</span>
               </Link>
@@ -138,7 +129,7 @@ export default function Landing() {
                 <div className="kicker-num">02 · Your defense</div>
                 <h3 className="h3">Development</h3>
                 <p>
-                  Websites that close — and the system that runs your front desk. A fast custom site from{' '}
+                  Websites that close & the system that runs your front desk. A fast custom site from{' '}
                   <strong>$97/mo</strong>, or the full app with an inbound AI receptionist that never misses a call,{' '}
                   <strong>$997/mo</strong>.
                 </p>
@@ -153,7 +144,7 @@ export default function Landing() {
           <div className="container">
             <div className="eyebrow" data-reveal>Built, not bolted on</div>
             <h2 className="h2" data-reveal style={{ maxWidth: '18ch' }}>
-              The systems run at scale — every day.
+              The systems run at scale, every day.
             </h2>
             <div className="metrics" data-reveal>
               <div className="metric">
@@ -185,7 +176,7 @@ export default function Landing() {
               Let's build your <span className="grad-text">system.</span>
             </h2>
             <p className="lead center" data-reveal style={{ margin: '20px auto 32px' }}>
-              Thirty minutes, no pitch. We'll show you where your pipeline's leaking and exactly what we'd build.
+              Thirty minutes, no pitch. We'll show you where your pipeline's leaking & exactly what we'd build.
             </p>
             <div className="cta-row" data-reveal style={{ justifyContent: 'center' }}>
               <a className="btn" href={CALENDLY} target="_blank" rel="noreferrer">Book a call</a>
@@ -206,9 +197,6 @@ export default function Landing() {
         .hw { display: inline-block; margin-right: 0.22em; will-change: transform, opacity; }
         .hero-copy .lead { margin-left: auto; margin-right: auto; }
 
-        .trust { padding: 10px 0 30px; }
-        .trust-label { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-        .trust-row { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; font-family: var(--display); font-weight: 600; font-size: 20px; color: var(--ink-dim); opacity: .82; }
         .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
         .offer-card { display: flex; flex-direction: column; gap: 14px; min-height: 256px; }
         .offer-card p { color: var(--muted); line-height: 1.55; }

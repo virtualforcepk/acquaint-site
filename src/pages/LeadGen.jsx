@@ -1,18 +1,18 @@
+import TrustMarquee from '../components/TrustMarquee.jsx'
+
 const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
 
 const SYSTEM = [
-  { t: 'Targeting', d: 'We pinpoint who your next customer actually is and build the list — no spray-and-pray.' },
-  { t: 'Multi-channel outreach', d: 'We reach them where they are, at volume, on your behalf — your pipeline fills while you work.' },
+  { t: 'Targeting', d: 'We pinpoint who your next customer actually is & build the list. No spray-and-pray.' },
+  { t: 'Multi-channel outreach', d: 'We reach them where they are, at volume, on your behalf. Your pipeline fills while you work.' },
   { t: 'AI lead-scoring', d: 'Every lead is scored and ranked, so your time goes to the ones ready to buy.' },
-  { t: 'Follow-up + CRM', d: 'Automated follow-up so nothing goes cold — every lead tracked in one place.' },
+  { t: 'Follow-up + CRM', d: 'Automated follow-up so nothing goes cold, every lead tracked in one place.' },
 ]
 const METRICS = [
   { n: '88,000+', l: 'prospects sourced' },
   { n: '30,000+', l: 'leads AI-scored & ranked' },
   { n: '1,700+', l: 'leads actively worked' },
 ]
-const CLIENTS = ['Lease At Ease', 'Lamar Donair', 'Ricco Decor', 'Empire Protection', 'Jawanda Consulting']
-
 export default function LeadGen() {
   return (
     <>
@@ -21,11 +21,11 @@ export default function LeadGen() {
         <div className="container center">
           <div className="eyebrow" data-reveal>Lead Gen · Your offense</div>
           <h1 className="h1" data-reveal style={{ maxWidth: '16ch', margin: '0 auto' }}>
-            We find your next customer — and turn them into a <span className="grad-text">sale.</span>
+            We find your next customer & turn them into a <span className="grad-text">sale.</span>
           </h1>
           <p className="lead center" data-reveal style={{ margin: '22px auto 0' }}>
-            Not campaigns you babysit — a system that sources, scores, and works your leads every day. Engineered,
-            shipped, and running while you close.
+            Not campaigns you babysit. A system that sources, scores, & works your leads every day. Engineered,
+            shipped, & running while you close.
           </p>
           <div className="cta-row" data-reveal style={{ justifyContent: 'center', marginTop: 30 }}>
             <a className="btn" href={CALENDLY} target="_blank" rel="noreferrer">Book a call</a>
@@ -77,27 +77,29 @@ export default function LeadGen() {
           <h2 className="h2" data-reveal style={{ maxWidth: '18ch', marginBottom: 36 }}>
             Real businesses. Real pipelines.
           </h2>
-          <div className="card case-feature" data-reveal>
-            <div className="case-result grad-text">3× qualified leads</div>
-            <blockquote className="case-quote">
-              “The results were nothing short of exceptional — a fresh, data-driven approach to our campaigns.”
-            </blockquote>
-            <cite className="case-cite">— Harry Jawanda, Founder · Jawanda Consulting</cite>
+          <div className="case-grid">
+            <div className="card case-card" data-reveal>
+              <div className="case-name">Lease At Ease</div>
+              <div className="case-result grad-text">Real-estate lead-gen</div>
+              <p>A property business running our full system. We source, score, & work their pipeline every day. They're behind the numbers above.</p>
+            </div>
+            {/* AKFB = Amazon Key for Business (Kamran's project). Amazon brand kept low-key per their wishes; mention cleared with them — confirm exact wording before shipping. */}
+            <div className="card case-card" data-reveal>
+              <div className="case-name">Multi-agent harness</div>
+              <div className="case-result grad-text">Built + approved</div>
+              <p>A multi-step system of AI agents we built & run. It earned Amazon's approval.</p>
+            </div>
+            <div className="card case-card" data-reveal>
+              <div className="case-name">Jawanda Consulting</div>
+              <div className="case-result grad-text">3× qualified leads</div>
+              <p>“The results were nothing short of exceptional — a fresh, data-driven approach to our campaigns.” — Harry Jawanda, Founder</p>
+            </div>
           </div>
-          {/* TODO: add Lamar Donair / Ricco Decor / Empire Protection case studies once their results are in */}
-          <p className="case-more" data-reveal>More case studies as we grow.</p>
         </div>
       </section>
 
       {/* ===== TRUSTED BY ===== */}
-      <section className="trust">
-        <div className="container center">
-          <div className="trust-label">Trusted by Canadian businesses</div>
-          <div className="trust-row">
-            {CLIENTS.map((c) => <span key={c}>{c}</span>)}
-          </div>
-        </div>
-      </section>
+      <TrustMarquee />
 
       {/* ===== CTA ===== */}
       <section className="section cta-final">
@@ -106,7 +108,7 @@ export default function LeadGen() {
             Let's fill your <span className="grad-text">pipeline.</span>
           </h2>
           <p className="lead center" data-reveal style={{ margin: '20px auto 32px' }}>
-            Thirty minutes, no pitch. We'll show you where your next customers are and exactly how we'd reach them.
+            Thirty minutes, no pitch. We'll show you where your next customers are & exactly how we'd reach them.
           </p>
           <div className="cta-row" data-reveal style={{ justifyContent: 'center' }}>
             <a className="btn" href={CALENDLY} target="_blank" rel="noreferrer">Book a call</a>
@@ -122,16 +124,14 @@ export default function LeadGen() {
         .metrics { display: flex; gap: 64px; flex-wrap: wrap; margin-top: 36px; }
         .metric-n { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 4vw, 52px); line-height: 1; }
         .metric-l { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-top: 8px; }
-        .case-feature { display: flex; flex-direction: column; gap: 16px; max-width: 760px; }
-        .case-result { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 4vw, 44px); line-height: 1; }
-        .case-quote { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 2.2vw, 26px); line-height: 1.35; color: var(--ink); }
-        .case-cite { font-style: normal; font-size: 15px; color: var(--muted); }
-        .case-more { font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--muted); margin-top: 26px; }
-        .trust { padding: 10px 0 40px; }
-        .trust-label { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-        .trust-row { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; font-family: var(--display); font-weight: 600; font-size: 20px; color: var(--ink-dim); opacity: .82; }
+        .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+        .case-card { display: flex; flex-direction: column; gap: 10px; }
+        .case-name { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+        .case-result { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.05; }
+        .case-card p { color: var(--ink-dim); line-height: 1.5; font-size: 15px; }
         @media (max-width: 760px) {
           .lg-steps { grid-template-columns: 1fr; }
+          .case-grid { grid-template-columns: 1fr; }
           .metrics { gap: 36px; }
         }
       `}</style>
