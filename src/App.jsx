@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route, Link, NavLink, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -50,30 +50,83 @@ function ScrollFX() {
 }
 
 function Nav() {
+  const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  // close on navigation + on Escape
+  useEffect(() => { setOpen(false) }, [pathname])
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   return (
-    <nav className="nav">
-      <Link to="/" className="brand">
-        <img src={`${BASE}arrow-mark.png`} alt="" className="brand-mark" />
-        <span>Acquaint</span>
-      </Link>
-      <div className="nav-links">
-        <NavLink to="/lead-gen">Lead Gen</NavLink>
-        <NavLink to="/web-automation">Development</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn nav-cta">Book a call</a>
+    <>
+      <nav className="nav">
+        <Link to="/" className="brand" onClick={() => setOpen(false)}>
+          <span>Acquaint</span>
+          <img src={`${BASE}arrow-mark.png`} alt="" className="brand-mark" />
+        </Link>
+        <div className="nav-links">
+          <NavLink to="/lead-gen">Lead Gen</NavLink>
+          <NavLink to="/web-automation">Development</NavLink>
+          <NavLink to="/about">About</NavLink>
+          <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn nav-cta">Book a call</a>
+        </div>
+        <button className="nav-burger" aria-label="Open menu" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+
+      {/* mobile slide-in menu — tap the backdrop (anywhere outside the panel) to close */}
+      <div className={'nav-sheet' + (open ? ' open' : '')} onClick={() => setOpen(false)} aria-hidden={!open}>
+        <aside className="nav-panel" role="dialog" aria-label="Site menu" onClick={(e) => e.stopPropagation()}>
+          <button className="nav-close" aria-label="Close menu" onClick={() => setOpen(false)}>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+          </button>
+          <NavLink to="/lead-gen" className="nav-panel-link" onClick={() => setOpen(false)}>Lead Gen</NavLink>
+          <NavLink to="/web-automation" className="nav-panel-link" onClick={() => setOpen(false)}>Development</NavLink>
+          <NavLink to="/about" className="nav-panel-link" onClick={() => setOpen(false)}>About</NavLink>
+          <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn nav-panel-cta" onClick={() => setOpen(false)}>Book a call</a>
+        </aside>
       </div>
+
       <style>{`
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
           padding: 16px var(--pad-x); backdrop-filter: blur(12px); background: linear-gradient(180deg, rgba(5,8,15,.72), rgba(5,8,15,0)); }
         .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); }
-        .brand-mark { width: 30px; height: 30px; object-fit: contain; margin-left: -2px; }
+        .brand-mark { width: 30px; height: 30px; object-fit: contain; }
         .nav-links { display: flex; align-items: center; gap: 28px; }
         .nav-links a { font-size: 15px; color: var(--muted); transition: color .2s; }
         .nav-links a:hover, .nav-links a.active { color: var(--ink); }
         .nav-cta { color: #03131c !important; padding: 11px 20px; font-size: 15px; }
-        @media (max-width: 760px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+        .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 40px; padding: 8px 9px; background: transparent; border: 0; cursor: pointer; }
+        .nav-burger span { display: block; width: 26px; height: 2px; border-radius: 2px; background: var(--ink); transition: background .2s; }
+        .nav-burger:hover span { background: var(--cyan); }
+
+        .nav-sheet { position: fixed; inset: 0; z-index: 60; overflow: hidden; display: flex; justify-content: flex-end;
+          background: rgba(3,6,12,0); opacity: 0; pointer-events: none; transition: opacity .3s ease, backdrop-filter .3s ease; }
+        .nav-sheet.open { background: rgba(3,6,12,.55); opacity: 1; pointer-events: auto; backdrop-filter: blur(3px); }
+        .nav-panel { position: relative; width: min(82vw, 300px); height: 100%;
+          background: linear-gradient(180deg, var(--bg-3), var(--bg-2)); border-left: 1px solid var(--line-2);
+          padding: 88px 26px 34px; display: flex; flex-direction: column; gap: 4px;
+          transform: translateX(100%); transition: transform .34s cubic-bezier(.4, 0, .2, 1); }
+        .nav-sheet.open .nav-panel { transform: translateX(0); }
+        .nav-close { position: absolute; top: 18px; right: 18px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: transparent; border: 0; color: var(--ink); cursor: pointer; }
+        .nav-panel-link { font-family: var(--display); font-weight: 600; font-size: 23px; color: var(--ink-dim); padding: 14px 0; border-bottom: 1px solid var(--line); transition: color .2s; }
+        .nav-panel-link:hover, .nav-panel-link.active { color: var(--ink); }
+        .nav-panel-cta { margin-top: 24px; justify-content: center; }
+
+        @media (max-width: 760px) {
+          .nav-links { display: none; }
+          .nav-burger { display: flex; }
+        }
       `}</style>
-    </nav>
+    </>
   )
 }
 
@@ -83,8 +136,8 @@ function Footer() {
       <div className="container footer-grid">
         <div>
           <div className="brand" style={{ marginBottom: 10 }}>
-            <img src={`${BASE}arrow-mark.png`} alt="" className="brand-mark" />
             <span>Acquaint</span>
+            <img src={`${BASE}arrow-mark.png`} alt="" className="brand-mark" />
           </div>
           <p className="footer-tag">AI lead-gen systems and conversion-built websites. Mississauga, serving all of Canada.</p>
         </div>
