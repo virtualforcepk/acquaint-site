@@ -3,7 +3,8 @@ const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
 const TIER1 = [
   'Built from scratch around your brand, never a recycled template',
   'Hosting included, always on',
-  'Fresh every week, we handle the updates',
+  'Weekly site updates — we handle everything',
+  'Monthly lead gen strategy session',
   'Designed to turn visitors into booked leads',
   'One-time setup (custom)',
 ]
@@ -13,6 +14,7 @@ const TIER2 = [
   'A CRM that captures every lead & follows up so none go cold',
   'A company AI brain that learns your business and answers like you would',
   'Custom automations built around how your company actually runs',
+  'Monthly lead gen strategy session',
   'One-time setup (custom)',
 ]
 

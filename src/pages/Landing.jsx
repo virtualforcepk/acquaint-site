@@ -106,7 +106,7 @@ export default function Landing() {
         <section className="hero-copy-wrap">
           <div className="container">
             <div className="hero-copy">
-              <div className="eyebrow" data-reveal>Lead-Gen · Websites · The voice that answers</div>
+              <div className="eyebrow" data-reveal>Lead Gen · Websites & Apps</div>
               <h1 className="h1" data-reveal>
                 Always pointed at your next <span className="grad-text">customer.</span>
               </h1>
