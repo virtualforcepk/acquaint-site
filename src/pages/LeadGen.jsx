@@ -114,7 +114,7 @@ export default function LeadGen() {
             <div className="card case-card" data-reveal>
               <div className="case-name">Multi-agent outreach system</div>
               <div className="case-result grad-text">Corporate-grade</div>
-              <p>A multi-step system of AI agents we designed, built & run, the outreach engine we created for corporate-level businesses.</p>
+              <p>Built to enterprise spec & cleared at scale. Today that same systems-first approach runs lead-gen for businesses across Canada.</p>
             </div>
             <div className="card case-card" data-reveal>
               <div className="case-name">Jawanda Consulting</div>
