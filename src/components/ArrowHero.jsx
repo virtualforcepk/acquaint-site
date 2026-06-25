@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 const BASE = import.meta.env.BASE_URL
-const HEAD = `${BASE}diamond-outline-t.png`
+const HEAD = `${BASE}diamond-solid-white.png`
 
 // Flat 2D connected arrow that stays ALIVE: a rAF loop continuously rotates it so its
 // tip aims at the "Book a call" button (.nav-cta), re-aiming smoothly as you scroll.
@@ -51,8 +51,8 @@ export default function ArrowHero() {
         </defs>
         {/* shaft first — runs up into the head and down into the fletching (the connector) */}
         <rect x="127.5" y="78" width="10" height="298" rx="5" fill="#e9f0fb" />
-        {/* head: wireframe-A, inverted black->white */}
-        <image href={HEAD} x="31" y="-2" width="202" height="202" filter="url(#inv)" />
+        {/* head: clean solid diamond-A */}
+        <image href={HEAD} x="31" y="-2" width="202" height="202" />
         {/* fletching */}
         <path d="M132 252 C108 274, 90 302, 91 334 C94 364, 110 378, 118 408 Z" fill="#e9f0fb" />
         <path d="M132 252 C156 274, 174 302, 173 334 C170 364, 154 378, 146 408 Z" fill="#e9f0fb" />
