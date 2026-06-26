@@ -66,7 +66,7 @@ function Nav() {
       <nav className="nav">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
           <span>Acquaint</span>
-          <img src={`${BASE}arrow-mark.svg`} alt="" className="brand-mark" />
+          <img src={`${BASE}arrow-mark-t.png`} alt="" className="brand-mark" />
         </Link>
         <div className="nav-links">
           <NavLink to="/lead-gen">Lead Gen</NavLink>
@@ -137,7 +137,7 @@ function Footer() {
         <div>
           <div className="brand" style={{ marginBottom: 10 }}>
             <span>Acquaint</span>
-            <img src={`${BASE}arrow-mark.svg`} alt="" className="brand-mark" />
+            <img src={`${BASE}arrow-mark-t.png`} alt="" className="brand-mark" />
           </div>
           <p className="footer-tag">AI lead-gen systems and conversion-built websites. Mississauga, serving all of Canada.</p>
         </div>

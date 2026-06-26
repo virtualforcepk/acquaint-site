@@ -91,7 +91,7 @@ export default function Landing() {
       {/* fixed background arrow field (behind everything) */}
       <div className="barrage" aria-hidden="true">
         {barrage.map((b, i) => (
-          <img key={i} src={`${BASE}arrow-mark.svg`} className="barrage-arrow" alt=""
+          <img key={i} src={`${BASE}arrow-mark-t.png`} className="barrage-arrow" alt=""
             style={{ left: `${b.left}vw`, top: `${b.top}vh`, width: `${b.size}px` }} />
         ))}
       </div>
