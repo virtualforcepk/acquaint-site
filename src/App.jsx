@@ -66,7 +66,7 @@ function Nav() {
       <nav className="nav">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
           <span>Acquaint</span>
-          <img src={`${BASE}arrow-mark.png`} alt="" className="brand-mark" />
+          <img src={`${BASE}arrow-mark.svg`} alt="" className="brand-mark" />
         </Link>
         <div className="nav-links">
           <NavLink to="/lead-gen">Lead Gen</NavLink>
@@ -98,7 +98,7 @@ function Nav() {
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
           padding: 16px var(--pad-x); backdrop-filter: blur(12px); background: linear-gradient(180deg, rgba(5,8,15,.72), rgba(5,8,15,0)); }
         .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); }
-        .brand-mark { width: 30px; height: 30px; object-fit: contain; mix-blend-mode: screen; }
+        .brand-mark { width: 30px; height: 30px; object-fit: contain; }
         .nav-links { display: flex; align-items: center; gap: 28px; }
         .nav-links a { font-size: 15px; color: var(--muted); transition: color .2s; }
         .nav-links a:hover, .nav-links a.active { color: var(--ink); }
@@ -137,7 +137,7 @@ function Footer() {
         <div>
           <div className="brand" style={{ marginBottom: 10 }}>
             <span>Acquaint</span>
-            <img src={`${BASE}arrow-mark.png`} alt="" className="brand-mark" />
+            <img src={`${BASE}arrow-mark.svg`} alt="" className="brand-mark" />
           </div>
           <p className="footer-tag">AI lead-gen systems and conversion-built websites. Mississauga, serving all of Canada.</p>
         </div>

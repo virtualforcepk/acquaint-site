@@ -91,7 +91,7 @@ export default function Landing() {
       {/* fixed background arrow field (behind everything) */}
       <div className="barrage" aria-hidden="true">
         {barrage.map((b, i) => (
-          <img key={i} src={`${BASE}arrow-mark.png`} className="barrage-arrow" alt=""
+          <img key={i} src={`${BASE}arrow-mark.svg`} className="barrage-arrow" alt=""
             style={{ left: `${b.left}vw`, top: `${b.top}vh`, width: `${b.size}px` }} />
         ))}
       </div>
@@ -205,7 +205,7 @@ export default function Landing() {
 
       <style>{`
         .barrage { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-        .barrage-arrow { position: absolute; opacity: 0; will-change: transform, opacity; mix-blend-mode: screen; filter: drop-shadow(0 2px 7px rgba(0,0,0,.35)); }
+        .barrage-arrow { position: absolute; opacity: 0; will-change: transform, opacity; filter: drop-shadow(0 2px 7px rgba(0,0,0,.35)); }
         .page { position: relative; z-index: 1; }
 
         .hero-stage { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center; }
