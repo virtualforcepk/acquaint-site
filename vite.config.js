@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// base './' so the build works on GitHub Pages (subpath) or any host.
+// './' for GitHub Pages (subpath deploy); '/' for Vercel (root deploy).
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  base: process.env.VERCEL ? '/' : './',
 })
