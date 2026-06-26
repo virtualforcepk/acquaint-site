@@ -205,7 +205,7 @@ export default function Landing() {
 
       <style>{`
         .barrage { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-        .barrage-arrow { position: absolute; opacity: 0; will-change: transform, opacity; filter: drop-shadow(0 2px 7px rgba(0,0,0,.35)); }
+        .barrage-arrow { position: absolute; opacity: 0; will-change: transform, opacity; mix-blend-mode: screen; filter: drop-shadow(0 2px 7px rgba(0,0,0,.35)); }
         .page { position: relative; z-index: 1; }
 
         .hero-stage { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center; }

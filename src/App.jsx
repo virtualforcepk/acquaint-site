@@ -98,7 +98,7 @@ function Nav() {
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
           padding: 16px var(--pad-x); backdrop-filter: blur(12px); background: linear-gradient(180deg, rgba(5,8,15,.72), rgba(5,8,15,0)); }
         .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); }
-        .brand-mark { width: 30px; height: 30px; object-fit: contain; }
+        .brand-mark { width: 30px; height: 30px; object-fit: contain; mix-blend-mode: screen; }
         .nav-links { display: flex; align-items: center; gap: 28px; }
         .nav-links a { font-size: 15px; color: var(--muted); transition: color .2s; }
         .nav-links a:hover, .nav-links a.active { color: var(--ink); }
