@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1fe0a4"/>
+      <stop offset="100%" stop-color="#34d6f0"/>
+    </linearGradient>
+  </defs>
+  <!-- shaft -->
+  <line x1="9" y1="24" x2="22" y2="9" stroke="url(#g)" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- arrowhead pointing NE -->
+  <path d="M22 9 L14 10.5 L20.5 17.5 Z" fill="url(#g)"/>
+  <!-- fletching (leaf) at SW -->
+  <path d="M9 24 C6 20.5 7 17 9.5 19.5 C12 22 9 27 9 24 Z" fill="url(#g)"/>
+</svg>
