@@ -8,35 +8,11 @@ gsap.registerPlugin(ScrollTrigger)
 
 const BASE = import.meta.env.BASE_URL
 const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
-
-// 3D bullseye target — a disc tilted slightly on its side (CSS perspective).
-// Concentric rings on a front face + a recessed back face give it real thickness,
-// a glowing cyan bull sits at center, and a faint reticle crosses it. It rocks
-// gently so you read its dimension. The arrow flies head-on into the bull.
-function Target3D() {
-  return (
-    <div className="target-stage" aria-hidden="true">
-      <div className="target3d">
-        <div className="t-back" />
-        <div className="t-face">
-          <span className="t-ring r1" />
-          <span className="t-ring r2" />
-          <span className="t-ring r3" />
-          <span className="t-cross h" />
-          <span className="t-cross v" />
-          <span className="t-ripple" />
-          <span className="t-bull" />
-        </div>
-      </div>
-    </div>
-  )
-}
+const VOLLEY = 7
 
 export default function Landing() {
   const rootRef = useRef(null)
 
-  // Ambient arrow field — each starts off-screen SW and sweeps NE on scroll to its
-  // base spot (full-screen cover), then lingers faint. Fewer/smaller on phones.
   const barrage = useMemo(() => {
     const mobile = window.innerWidth && window.innerWidth < 760
     const count = mobile ? 22 : 34
@@ -55,62 +31,49 @@ export default function Landing() {
     const ctx = gsap.context(() => {
       const vw = window.innerWidth || 1280, vh = window.innerHeight || 800
 
-      gsap.set('.arrow-wrapper', { xPercent: -80, yPercent: -16, opacity: 0 })
+      // tip of arrow-mark-t.png sits at ~80% left, ~16% top of the image
+      gsap.set('.volley-arrow', { xPercent: -80, yPercent: -16, opacity: 0 })
+      gsap.set('.hero-mono', { opacity: 0, scale: 0.8 })
 
       if (!reduce) {
-        const fromX = -Math.min(950, vw * 0.74)
-        const fromY  = Math.min(740, vh * 0.68)
-        const exitX  =  Math.min(520, vw * 0.40)
-        const exitY  = -Math.min(400, vh * 0.36)
+        const baseFromX = -Math.min(720, vw * 0.56)
+        const baseFromY  =  Math.min(520, vh * 0.52)
 
-        const TRAVEL = 0.80
+        // Single timeline — more reliable in React Strict Mode than individual tweens with delays
+        const intro = gsap.timeline({ delay: 0.18 })
+        gsap.utils.toArray('.volley-arrow').forEach((el, i) => {
+          const perp = (i - (VOLLEY - 1) / 2) * 30
+          intro.fromTo(el,
+            {
+              xPercent: -80, yPercent: -16,
+              x: baseFromX + perp * 0.55,
+              y: baseFromY - perp * 0.55,
+              scale: 0.22,
+              opacity: 0,
+            },
+            {
+              x: 0, y: 0,
+              scale: 1,
+              opacity: 1,
+              duration: 0.60,
+              ease: 'power2.out',
+            },
+            i * 0.09   // stagger position within the timeline
+          )
+        })
 
-        const intro = gsap.timeline()
-
-        // Phase 1 — BULLET ENTRY
-        // Arrow image naturally points NE (tip at 80%, 16% of image = upper-right).
-        // Wrapper translates from far SW to bull center — no rotation needed.
+        // Last arrow lands at (VOLLEY-1)*0.09 + 0.60 = 1.14s from intro start
+        // Dissolve volley → crystallise into monogram
         intro
-          // Wrapper: translates from far SW to bull, tip locked NE
-          .fromTo('.arrow-wrapper',
-            { x: fromX, y: fromY, scale: 0.12, opacity: 0 },
-            { x: 0,     y: 0,     scale: 1,    opacity: 1, duration: TRAVEL, ease: 'power3.out' }
-          )
-          // Trail: grows from nothing at the tail as the arrow accelerates in
-          .fromTo('.arrow-trail',
-            { scaleX: 0, transformOrigin: '100% 50%', opacity: 0 },
-            { scaleX: 1, opacity: 1, duration: TRAVEL * 0.75, ease: 'power2.out' },
-            TRAVEL * 0.1
-          )
-
-        // Phase 2 — IMPACT: trail flares then vanishes at the hit
-        .to('.arrow-trail', { scaleX: 1.3, opacity: 0, duration: 0.12, ease: 'power3.in' }, '>-0.04')
-        .to('.t-bull',   { scale: 4,    boxShadow: '0 0 150px 65px rgba(220,248,255,1)', duration: 0.05 }, '<')
-        .to('.target3d', { scale: 1.14, duration: 0.05 }, '<')
-
-        // Phase 3 — SHATTER: every piece flies a different direction
-        .to('.r1', { x: -vw*0.14, y: -vh*0.11, scale: 3.6, rotation: -78, opacity: 0, duration: 0.55, ease: 'expo.out' }, '<0.02')
-        .to('.r2', { x:  vw*0.13, y:  vh*0.14, scale: 2.9, rotation:  62, opacity: 0, duration: 0.50, ease: 'expo.out' }, '<')
-        .to('.r3', { x: -vw*0.07, y:  vh*0.16, scale: 2.5, rotation: -50, opacity: 0, duration: 0.45, ease: 'expo.out' }, '<')
-        .to('.t-cross',  { scaleX: 7, scaleY: 0, opacity: 0, duration: 0.17, ease: 'power3.out' }, '<')
-        .to('.t-bull',   { scale: 11, opacity: 0, duration: 0.28, ease: 'expo.out' }, '<')
-        .to('.t-back',   { scale: 2.4, opacity: 0, duration: 0.36, ease: 'expo.out' }, '<')
-        .to('.t-ripple', { scale: 5.5, opacity: 0, duration: 0.42, ease: 'power2.out' }, '<')
-        .set('.target3d', { animation: 'none' }, '<')
-
-        // Phase 4 — PIERCE THROUGH: wrapper exits straight NE, tip still forward, fades out
-        .to('.arrow-wrapper', {
-          x: exitX, y: exitY,
-          scale: 0.20, opacity: 0,
-          duration: 0.44, ease: 'power2.in'
-        }, '>-0.26')
+          .to('.volley-arrow', { opacity: 0, duration: 0.28, ease: 'power1.in' }, '-=0.32')
+          .to('.hero-mono',    { opacity: 1, scale: 1, duration: 0.46, ease: 'back.out(1.4)' }, '<')
 
         window.__heroIntro = intro
       } else {
-        gsap.set('.arrow-wrapper', { x: 0, y: 0, scale: 1, opacity: 1 })
+        gsap.set('.hero-mono', { opacity: 1, scale: 1 })
       }
 
-      // ---- SCROLL: hero figure recedes, ambient wave sweeps in, copy reveals ----
+      // ---- SCROLL: hero recedes, ambient barrage sweeps in ----
       if (reduce) { gsap.set('.barrage-arrow', { opacity: 0 }); return }
       const arrows = gsap.utils.toArray('.barrage-arrow')
       const tl = gsap.timeline({
@@ -118,7 +81,7 @@ export default function Landing() {
           trigger: document.documentElement,
           start: 'top top',
           end: '+=' + Math.round(vh * 0.42),
-          scrub: 0.6,                 // smoother follow
+          scrub: 0.6,
         },
       })
       tl.to('.hero-figure', { scale: 0.9, opacity: 0, ease: 'power1.inOut', duration: 0.7 }, 0)
@@ -142,7 +105,7 @@ export default function Landing() {
 
   return (
     <div ref={rootRef}>
-      {/* fixed ambient arrow field (behind everything) */}
+      {/* fixed ambient arrow field */}
       <div className="barrage" aria-hidden="true">
         {barrage.map((b, i) => (
           <img key={i} src={`${BASE}arrow-mark-t.png`} className="barrage-arrow" alt=""
@@ -151,18 +114,21 @@ export default function Landing() {
       </div>
 
       <div className="page">
-        {/* ===== HERO FIGURE — 3D tilted target + arrow flying head-on into it ===== */}
+        {/* ===== HERO: volley of arrows converges → monogram ===== */}
         <section className="hero-stage">
           <div className="hero-figure">
-            <Target3D />
-            <div className="arrow-wrapper" aria-hidden="true">
-              <div className="arrow-trail" />
-              <img className="hero-arrow" src={`${BASE}arrow-mark-t.png`} alt="" />
+            {/* the volley — each arrow flies tip-first from SW */}
+            <div className="volley" aria-hidden="true">
+              {Array.from({ length: VOLLEY }, (_, i) => (
+                <img key={i} className="volley-arrow" src={`${BASE}arrow-mark-t.png`} alt="" />
+              ))}
             </div>
+            {/* monogram — crystallises at center after the volley dissolves */}
+            <img className="hero-mono" src={`${BASE}arrow-mark-t.png`} alt="Acquaint" />
           </div>
         </section>
 
-        {/* ===== HERO COPY — reveals as you scroll down ===== */}
+        {/* ===== HERO COPY ===== */}
         <section className="hero-copy-wrap">
           <div className="container">
             <div className="hero-copy">
@@ -184,7 +150,7 @@ export default function Landing() {
         {/* ===== TRUST ===== */}
         <TrustMarquee />
 
-        {/* ===== TWO OFFERS ===== */}
+        {/* ===== OFFERS ===== */}
         <section className="section">
           <div className="container">
             <div className="eyebrow" data-reveal style={{ display: 'block', textAlign: 'center' }}>
@@ -247,7 +213,7 @@ export default function Landing() {
               </div>
             </div>
             <blockquote className="quote" data-reveal>
-              “The results were nothing short of exceptional — a fresh, data-driven approach to our campaigns.”
+              "The results were nothing short of exceptional — a fresh, data-driven approach to our campaigns."
               <cite>
                 — Harry Jawanda, Founder · Jawanda Consulting · <strong>3× qualified leads</strong>
               </cite>
@@ -280,93 +246,33 @@ export default function Landing() {
         .hero-figure {
           position: relative; width: clamp(230px, 33vw, 380px); height: clamp(230px, 33vw, 380px);
           display: flex; align-items: center; justify-content: center; will-change: transform, opacity;
-          perspective: 600px;
         }
         .hero-figure::before {
           content: ''; position: absolute; inset: -28%;
-          background: radial-gradient(circle, rgba(70,140,255,.16), rgba(40,90,210,.05) 45%, transparent 70%);
-          filter: blur(18px); pointer-events: none;
+          background: radial-gradient(circle, rgba(52,214,240,.12), rgba(40,90,210,.04) 45%, transparent 70%);
+          filter: blur(22px); pointer-events: none;
         }
 
-        /* ---- 3D tilted target ---- */
-        .target-stage { perspective: 1100px; perspective-origin: 42% 42%; }
-        .target3d {
-          position: relative; width: clamp(150px, 22vw, 250px); aspect-ratio: 1 / 1;
-          transform-style: preserve-3d; transform: rotateX(15deg) rotateY(-30deg);
-          animation: targetRock 9s ease-in-out infinite;
-          filter: drop-shadow(0 22px 34px rgba(0,0,0,.55));
-        }
-        @keyframes targetRock {
-          0%, 100% { transform: rotateX(16deg) rotateY(-34deg); }
-          50%      { transform: rotateX(10deg) rotateY(-15deg); }
-        }
-        .t-back {
-          position: absolute; inset: 0; border-radius: 50%; transform: translateZ(-18px);
-          background: radial-gradient(circle at 38% 32%, #122139, #05090f 72%);
-          box-shadow: 0 0 0 2px rgba(120,170,255,.16), inset 0 0 42px rgba(0,0,0,.6);
-        }
-        .t-face {
-          position: absolute; inset: 0; border-radius: 50%; transform-style: preserve-3d;
-          background: radial-gradient(circle at 40% 34%, rgba(20,34,58,.55), rgba(6,11,22,.12) 72%);
-        }
-        .t-ring {
-          position: absolute; border-radius: 50%; border-style: solid;
-          border-color: rgba(255,255,255,.92); box-shadow: 0 0 9px rgba(120,180,255,.45);
-        }
-        .t-ring.r1 { inset: 3%;  border-width: 5px; }
-        .t-ring.r2 { inset: 23%; border-width: 5px; }
-        .t-ring.r3 { inset: 43%; border-width: 5px; border-color: rgba(160,215,255,.95); }
-        .t-cross { position: absolute; left: 50%; top: 50%; background: rgba(255,255,255,.42); }
-        .t-cross.h { width: 86%; height: 2px; transform: translate(-50%, -50%); }
-        .t-cross.v { height: 86%; width: 2px; transform: translate(-50%, -50%); }
-        .t-ripple {
-          position: absolute; inset: 30%; border-radius: 50%;
-          border: 3px solid rgba(160,215,255,.9); opacity: 0; pointer-events: none;
-        }
-        .t-bull {
-          position: absolute; inset: 60%; border-radius: 50%;
-          background: radial-gradient(circle at 42% 38%, #aee4ff, #2e86ff 72%);
-          box-shadow: 0 0 14px 3px rgba(90,170,255,.85);
-        }
-
-        /* ---- arrow: wrapper handles position/animation, img handles drill-spin ---- */
-        .arrow-wrapper {
+        /* Volley: 7 small arrows GSAP-translated from SW, tip locked NE */
+        .volley { position: absolute; inset: 0; pointer-events: none; }
+        .volley-arrow {
           position: absolute; left: 50%; top: 50%;
-          opacity: 0; pointer-events: none; will-change: transform, opacity; z-index: 3;
-          transform-style: preserve-3d;
+          width: clamp(55px, 8.5vw, 100px); height: auto;
+          filter: drop-shadow(0 0 10px rgba(52,214,240,.60));
+          opacity: 0;
+          will-change: transform, opacity;
         }
-        .hero-arrow {
-          display: block; width: clamp(95px, 14vw, 175px); height: auto;
-          filter: drop-shadow(0 0 14px rgba(52,214,240,.7));
-          position: relative; z-index: 1;
+
+        /* Monogram — large crystallised form revealed at center */
+        .hero-mono {
+          width: clamp(140px, 22vw, 220px); height: auto;
+          position: relative; z-index: 2; opacity: 0;
+          filter: drop-shadow(0 0 32px rgba(52,214,240,.60)) drop-shadow(0 0 10px rgba(52,214,240,.35));
+          animation: monoBreath 4s ease-in-out infinite;
         }
-        /* Comet tail — extends LEFT in the wrapper's local space = SW in screen space.
-           Right edge anchors at the arrow tail (~8% from left of image).
-           Outer glow + hot white core give the "bullet trailing fire" look. */
-        .arrow-trail {
-          position: absolute;
-          right: 88%;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 500px; height: 28px;
-          background: linear-gradient(to right,
-            transparent 0%,
-            rgba(31,224,164,.05) 30%,
-            rgba(52,214,240,.20) 60%,
-            rgba(52,214,240,.50) 82%,
-            rgba(210,250,255,.70) 100%
-          );
-          filter: blur(6px);
-          pointer-events: none;
-        }
-        .arrow-trail::after {
-          content: '';
-          position: absolute;
-          right: 0; top: 50%;
-          transform: translateY(-50%);
-          width: 55%; height: 5px;
-          background: linear-gradient(to right, transparent, rgba(255,255,255,.85));
-          filter: blur(1.5px);
+        @keyframes monoBreath {
+          0%, 100% { filter: drop-shadow(0 0 32px rgba(52,214,240,.60)) drop-shadow(0 0 10px rgba(52,214,240,.35)); }
+          50%       { filter: drop-shadow(0 0 48px rgba(52,214,240,.85)) drop-shadow(0 0 18px rgba(52,214,240,.55)); }
         }
 
         .hero-copy-wrap { padding: 35vh 0 8px; text-align: center; }
@@ -394,9 +300,6 @@ export default function Landing() {
           .offer-grid { grid-template-columns: 1fr; }
           .offer-grid-3 { grid-template-columns: 1fr; }
           .metrics { gap: 36px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .target3d { animation: none; }
         }
       `}</style>
     </div>
