@@ -5,7 +5,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Landing from './pages/Landing.jsx'
 import About from './pages/About.jsx'
-import Development from './pages/Development.jsx'
+import Website from './pages/Website.jsx'
+import AppDev from './pages/AppDev.jsx'
 import LeadGen from './pages/LeadGen.jsx'
 import { initAnalytics, trackPageView } from './analytics.js'
 
@@ -15,8 +16,9 @@ const CALENDLY = 'https://calendly.com/kamran1-sou9/new-meeting'
 
 const PAGE_TITLES = {
   '/': 'Acquaint Media | AI Lead-Gen & Websites That Convert',
+  '/website': 'Website | Acquaint Media',
+  '/app': 'App | Acquaint Media',
   '/lead-gen': 'Lead Gen | Acquaint Media',
-  '/web-automation': 'Development | Acquaint Media',
   '/about': 'About | Acquaint Media',
 }
 
@@ -69,8 +71,9 @@ function Nav() {
           <img src={`${BASE}arrow-mark-t.png`} alt="" className="brand-mark" />
         </Link>
         <div className="nav-links">
+          <NavLink to="/website">Website</NavLink>
+          <NavLink to="/app">App</NavLink>
           <NavLink to="/lead-gen">Lead Gen</NavLink>
-          <NavLink to="/web-automation">Development</NavLink>
           <NavLink to="/about">About</NavLink>
           <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn nav-cta">Book a call</a>
         </div>
@@ -87,8 +90,9 @@ function Nav() {
               <line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" />
             </svg>
           </button>
+          <NavLink to="/website" className="nav-panel-link" onClick={() => setOpen(false)}>Website</NavLink>
+          <NavLink to="/app" className="nav-panel-link" onClick={() => setOpen(false)}>App</NavLink>
           <NavLink to="/lead-gen" className="nav-panel-link" onClick={() => setOpen(false)}>Lead Gen</NavLink>
-          <NavLink to="/web-automation" className="nav-panel-link" onClick={() => setOpen(false)}>Development</NavLink>
           <NavLink to="/about" className="nav-panel-link" onClick={() => setOpen(false)}>About</NavLink>
           <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn nav-panel-cta" onClick={() => setOpen(false)}>Book a call</a>
         </aside>
@@ -144,8 +148,9 @@ function Footer() {
         <div className="footer-cols">
           <div>
             <div className="footer-h">Offers</div>
+            <Link to="/website">Website</Link>
+            <Link to="/app">App</Link>
             <Link to="/lead-gen">Lead Gen</Link>
-            <Link to="/web-automation">Development</Link>
           </div>
           <div>
             <div className="footer-h">Company</div>
@@ -194,8 +199,9 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/website" element={<Website />} />
+          <Route path="/app" element={<AppDev />} />
           <Route path="/lead-gen" element={<LeadGen />} />
-          <Route path="/web-automation" element={<Development />} />
           <Route path="/about" element={<About />} />
         </Routes>
       </main>
